@@ -1,6 +1,7 @@
 // Import necessary components from react-router-dom and other parts of the application.
 import { Link } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer";  // Custom hook for accessing the global state.
+import Card from "../components/Card";
 
 export const Demo = () => {
   // Access the global state and dispatch function using the useGlobalReducer hook.
@@ -8,6 +9,9 @@ export const Demo = () => {
 
   return (
     <div className="container">
+      <Card title="Demo">
+        This is a demo page, you can interact with stuff on it.
+      </Card>
       <ul className="list-group">
         {/* Map over the 'todos' array from the store and render each item as a list element */}
         {store && store.todos?.map((item) => {
@@ -24,7 +28,7 @@ export const Demo = () => {
               
               <button className="btn btn-success" 
                 onClick={() => dispatch({
-                  type: "add_task", 
+                  type: "change_color", 
                   payload: { id: item.id, color: '#ffa500' }
                 })}>
                 Change Color

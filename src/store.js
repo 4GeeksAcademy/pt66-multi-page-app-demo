@@ -18,7 +18,7 @@ export const initialStore=()=>{
 
 export default function storeReducer(store, action = {}) {
   switch(action.type){
-    case 'add_task':
+    case 'change_color':
 
       const { id,  color } = action.payload
 
