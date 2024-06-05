@@ -1,19 +1,47 @@
-import { useLocation, useParams } from "react-router-dom";
 import { RecipeCard } from "../components/RecipeCard";
+import { useState } from "react";
+import useGlobalReducer from "../hooks/useGlobalReducer"; 
 
 const RecipePage = () => {
-  const recipe = {
-    title: "Æblekage",
-    image:
-      "https://www.fabfood4all.co.uk/wp-content/uploads/2013/09/Danish-Apple-Cake-024-LR2-1024x640.jpg",
-    summary: `Danish Apple Cake (Æblekage) is not actually a cake but a traditional Danish dessert comprising of layers of stewed apples, caramelised oats and finished off with whipped cream.`,
+  const [input, setInput] = useState("");
+  const { store, dispatch } = useGlobalReducer();
+
+  const handleSubmit = async () => {
+    const API_KEY = "150b3d1fc44d4503a4808decd9346790";
+    const URL = `https://api.spoonacular.com/recipes/complexSearch?query=${input}&apiKey=${API_KEY}`
+
+    const response = await fetch(URL);
+    if (response.ok) {
+      const data = await response.json();
+      dispatch({
+        type: 'setResults',
+        payload: {
+          results: data.results
+        }
+      });
+      setInput("");
+    }
+
   };
 
   return (
     <>
       <div className="container">
-        <h1>Recipes</h1>
-        <RecipeCard recipe={recipe} />
+        <h1>Search For Recipes</h1>
+        <form onSubmit={ev => {
+          ev.preventDefault();
+          handleSubmit();
+        }}>
+          <input
+            type="text"
+            value={input}
+            onChange={ev => setInput(ev.target.value)}
+          />
+          <button className="btn btn-primary">
+            Search
+          </button>
+          {store.searchResults.map(res => <RecipeCard recipe={res} />)}
+        </form>
       </div>
     </>
   );

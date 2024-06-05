@@ -1,5 +1,7 @@
 export const initialStore=()=>{
-  return{
+  return {
+    counter: 0,
+    searchResults: [],
     message: null,
     todos: [
       {
@@ -18,6 +20,31 @@ export const initialStore=()=>{
 
 export default function storeReducer(store, action = {}) {
   switch(action.type){
+    case 'setResults':
+      console.log(action.payload)
+      const { results } = action.payload;
+      return {
+        ...store,
+        searchResults: results,
+      };
+    case 'incr':
+      return {
+        ...store,
+        counter: store.counter + 1
+      };
+    case 'decr':
+      return {
+        ...store,
+        counter: store.counter - 1
+      };
+    case 'set':
+      console.log(action.payload)
+      const { value } = action.payload;
+      return {
+        ...store,
+        counter: value,
+      };
+
     case 'change_color':
 
       const { id,  color } = action.payload
