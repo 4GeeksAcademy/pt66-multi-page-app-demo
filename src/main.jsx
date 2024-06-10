@@ -18,4 +18,6 @@ const Main = () => {
 };
 
 // Render the Main component into the root DOM element.
-ReactDOM.createRoot(document.getElementById("root")).render(<Main />);
+ReactDOM.createRoot(
+  document.getElementById("root")).render(<Main />
+);
