@@ -1,3 +1,33 @@
-.something {
-    color: red;
+.todo-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.todo-list li {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.todo-list li > label {
+  display: inline-block;
+  width: 100%;
+}
+
+.todo-list li > input[type="checkbox"] {
+  display: none;
+}
+
+.todo-list li > form,
+input.todo-input {
+  width: 100%;
+  margin-bottom: 0.25rem;
+}
+
+.todo-list li > input:checked + label {
+  text-decoration: line-through;
+  opacity: 25%;
+  transition: opacity 250ms;
 }

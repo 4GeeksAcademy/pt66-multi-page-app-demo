@@ -1,70 +1,46 @@
 import fib from "./actions/fibonacci";
 
-export const initialStore=()=>{
+export const initialStore = () => {
   return {
-    counter: 0,
-    searchResults: [],
-    fib_n: 1,
-    message: null,
-    todos: [
-      {
-        id: 1,
-        title: "Make the bed",
-        background: null,
-      },
-      {
-        id: 2,
-        title: "Do my homework",
-        background: null,
-      }
-    ]
-  }
-}
+    todos: [],
+  };
+};
 
 export default function storeReducer(store, action = {}) {
-  switch(action.type){
-    case 'fib':
-      const { n } = action.payload;
-      return {
-        ...store,
-        fib_n: fib(n)
-      }
-      
-    case 'setResults':
-      console.log(action.payload)
-      const { results } = action.payload;
-      return {
-        ...store,
-        searchResults: results,
-      };
+  if (action.type === "create_todo") {
+    const { todo } = action;
 
-    case 'incr':
-      return {
-        ...store,
-        counter: store.counter + 1
-      };
+    return {
+      ...store,
+      todos: [todo, ...store.todos],
+    };
+  } else if (action.type === "read_from_api") {
+    const { todos } = action;
 
-    case 'decr':
-      return {
-        ...store,
-        counter: store.counter - 1
-      };
+    return {
+      ...store,
+      todos: todos,
+    };
+  } else if (action.type === "edit_todo") {
+    const { todo } = action;
 
-    case 'set':
-      console.log(action.payload)
-      const { value } = action.payload;
-      return {
-        ...store,
-        counter: value,
-      };
-
-    case 'change_color':
-      const { id,  color } = action.payload
-      return {
-        ...store,
-        todos: store.todos.map((todo) => (todo.id === id ? { ...todo, background: color } : todo))
-      };
-    default:
-      throw Error('Unknown action.');
-  }    
+    const updateIdx = store.todos.findIndex(
+      // item is an item in the store
+      (item) => item.id === todo.id
+    );
+    return {
+      ...store,
+      todos: store.todos.toSpliced(updateIdx, 1, todo),
+    };
+  } else if (action.type === "delete_todo") {
+    const { todo_id } = action;
+    
+    const deleteIdx = store.todos.findIndex((todo) => todo.id === todo_id);
+    return {
+      ...store,
+      todos: store.todos.toSpliced(deleteIdx, 1),
+    };
+  } else {
+    throw Error("Unknown action.");
+  }
 }
