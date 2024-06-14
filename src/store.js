@@ -1,5 +1,3 @@
-import fib from "./actions/fibonacci";
-
 export const initialStore = () => {
   return {
     todos: [],
