@@ -63,7 +63,6 @@ export const Home = () => {
 
   return (
     <div className="container">
-      <h1>Just Another Todo List</h1>
       <ul className="todo-list">
         <li>
           <form onSubmit={addTodo}>

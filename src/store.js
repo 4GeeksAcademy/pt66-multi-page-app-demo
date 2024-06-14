@@ -19,7 +19,7 @@ export default function storeReducer(store, action = {}) {
 
     return {
       ...store,
-      todos: todos,
+      todos: todos.sort((a, b) => b.id - a.id),
     };
   } else if (action.type === "edit_todo") {
     const { todo } = action;
@@ -34,7 +34,7 @@ export default function storeReducer(store, action = {}) {
     };
   } else if (action.type === "delete_todo") {
     const { todo_id } = action;
-    
+
     const deleteIdx = store.todos.findIndex((todo) => todo.id === todo_id);
     return {
       ...store,

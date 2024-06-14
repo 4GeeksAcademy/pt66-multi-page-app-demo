@@ -11,9 +11,9 @@ const TodoPage = () => {
   };
 
   return (
-    <>
+    <div className="container">
       <h1>{activeTodo().label}</h1>
-    </>
+    </div>
   );
 };
 
